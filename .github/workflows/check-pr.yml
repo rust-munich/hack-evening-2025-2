@@ -66,6 +66,9 @@ jobs:
 
         working-directory: ${{ steps.determine_project.outputs.project }}
 
+      - name: setup | hyperfine
+        run: cargo binstall hyperfine
+
       - name: benchmark
         run: |
           hyperfine --warmup 5 --export-markdown benchmark.md \
