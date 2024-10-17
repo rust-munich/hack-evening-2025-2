@@ -89,7 +89,7 @@ jobs:
 
           GITSHA=$(git rev-parse HEAD)
 
-          echo "### Benchamrk Preview at $GITSHA" > comment.md
+          echo "### Benchmark Preview at $GITSHA" > comment.md
           echo "" >> comment.md
           echo "$RESULTS" >> comment.md
           echo "" >> comment.md
