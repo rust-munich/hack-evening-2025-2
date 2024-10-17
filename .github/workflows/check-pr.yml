@@ -89,7 +89,12 @@ jobs:
 
           GITSHA=$(git rev-parse HEAD)
 
+          echo "### Benchamrk Preview at $GITSHA" > comment.md
+          echo "" >> comment.md
+          echo "$RESULTS" >> comment.md
+          echo "" >> comment.md
+
           # Post the comment to the PR
-          gh pr comment ${{ github.event.pull_request.number }} --body "### Benchamrk Preview at $GITSHA\n$RESULTS\n"
+          gh pr comment ${{ github.event.pull_request.number }} -F comment.md
         env:
           GH_TOKEN: ${{ github.token }}
