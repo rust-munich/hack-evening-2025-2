@@ -91,3 +91,5 @@ jobs:
 
           # Post the comment to the PR
           gh pr comment ${{ github.event.pull_request.number }} --body "### Benchamrk Preview at $GITSHA\n$RESULTS\n"
+        env:
+          GH_TOKEN: ${{ github.token }}
