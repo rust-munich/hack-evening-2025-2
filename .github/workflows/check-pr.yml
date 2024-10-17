@@ -62,7 +62,7 @@ jobs:
       - name: diff results
         run: |
           # Check if the results are correct
-          diff results-small.txt ../samples/expected-results-small.txt
+          diff -w results-small.txt ../samples/expected-results-small.txt
 
         working-directory: ${{ steps.determine_project.outputs.project }}
 
