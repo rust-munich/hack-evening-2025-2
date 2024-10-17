@@ -56,7 +56,7 @@ jobs:
         working-directory: ${{ steps.determine_project.outputs.project }}
 
       - name: test
-        run: cargo test --release -- ../samples/input-small.csv > results-small.txt
+        run: cargo run --release -- ../samples/input-small.csv > results-small.txt
         working-directory: ${{ steps.determine_project.outputs.project }}
 
       - name: diff results
