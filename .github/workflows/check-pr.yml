@@ -1,0 +1,85 @@
+name: Check PR
+on:
+  pull_request:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -CeEuxo pipefail {0}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: setup | rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          default: true
+          profile: minimal
+
+      - name: determine the new added project
+        id: determine_project
+        run: |
+          # Get the name of the main branch (assuming it's 'main')
+          MAIN_BRANCH="main"
+
+          # Get the latest commit diff or the diff between the current branch and the main branch
+          DIFF=$(git diff --name-status $MAIN_BRANCH)
+
+          # Extract the names of new folders
+          NEW_FOLDERS=$(echo "$DIFF" | grep "^A" | awk '{print $2}' | grep 'Cargo.toml' | awk -F/ '{print $1}' | uniq)
+
+          # Print the new folder name
+          echo "New Project: $NEW_FOLDERS"
+
+          # Test if there is any new folder if not break the build
+          if [ -z "$NEW_FOLDERS" ]; then
+            echo "No new project found"
+            exit 1
+          fi
+
+          # Set the output variable
+          echo "::set-output name=project::$NEW_FOLDERS"
+
+      - name: build
+        run: cargo build --release
+        working-directory: ${{ steps.determine_project.outputs.project }}
+
+      - name: test
+        run: cargo test --release -- samples/input-small.csv > results-small.txt
+        working-directory: ${{ steps.determine_project.outputs.project }}
+
+      - name: diff results
+        run: |
+          # Check if the results are correct
+          diff results-small.txt samples/expected-results-small.txt
+
+        working-directory: ${{ steps.determine_project.outputs.project }}
+
+      - name: benchmark
+        run: |
+          hyperfine --export-markdown benchmark.md \
+            'cargo run --release -- samples/input-small.csv' \
+            'cargo run --release -- samples/input-medium.csv' \
+            'cargo run --release -- samples/input-large.csv'
+        working-directory: ${{ steps.determine_project.outputs.project }}
+
+      - name: post comment
+        run: |
+          # Read the test results
+          RESULTS=$(cat ${{ steps.determine_project.outputs.project }}/benchmark.md)
+
+          # Print the results
+          echo "Results: $RESULTS"
+
+          GITSHA=$(git rev-parse HEAD)
+
+          # Post the comment to the PR
+          gh pr comment ${{ github.event.pull_request.number }} --body "### Benchamrk Preview at $GITSHA\n$RESULTS\n"
