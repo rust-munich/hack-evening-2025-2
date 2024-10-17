@@ -67,7 +67,9 @@ jobs:
         working-directory: ${{ steps.determine_project.outputs.project }}
 
       - name: setup | hyperfine
-        run: cargo binstall hyperfine
+        uses: taiki-e/install-action@v2
+        with:
+          tool: hyperfine
 
       - name: benchmark
         run: |
