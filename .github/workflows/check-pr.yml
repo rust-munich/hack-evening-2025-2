@@ -53,22 +53,22 @@ jobs:
         working-directory: ${{ steps.determine_project.outputs.project }}
 
       - name: test
-        run: cargo test --release -- samples/input-small.csv > results-small.txt
+        run: cargo test --release -- ../samples/input-small.csv > results-small.txt
         working-directory: ${{ steps.determine_project.outputs.project }}
 
       - name: diff results
         run: |
           # Check if the results are correct
-          diff results-small.txt samples/expected-results-small.txt
+          diff results-small.txt ../samples/expected-results-small.txt
 
         working-directory: ${{ steps.determine_project.outputs.project }}
 
       - name: benchmark
         run: |
-          hyperfine --export-markdown benchmark.md \
-            'cargo run --release -- samples/input-small.csv' \
-            'cargo run --release -- samples/input-medium.csv' \
-            'cargo run --release -- samples/input-large.csv'
+          hyperfine --warmup 5 --export-markdown benchmark.md \
+            'cargo run --release -- ../samples/input-small.csv' \
+            'cargo run --release -- ../samples/input-medium.csv' \
+            'cargo run --release -- ../samples/input-large.csv'
         working-directory: ${{ steps.determine_project.outputs.project }}
 
       - name: post comment
