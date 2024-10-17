@@ -30,6 +30,9 @@ jobs:
           # Get the name of the main branch (assuming it's 'main')
           MAIN_BRANCH="main"
 
+          # Fetch the main branch
+          git fetch origin $MAIN_BRANCH:$MAIN_BRANCH
+
           # Get the latest commit diff or the diff between the current branch and the main branch
           DIFF=$(git diff --name-status $MAIN_BRANCH)
 
