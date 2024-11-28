@@ -27,20 +27,17 @@ jobs:
           # Fetch the main branch
           git fetch origin $MAIN_BRANCH:$MAIN_BRANCH
 
-          # Get the latest commit diff or the diff between the current branch and the main branch
-          DIFF=$(git diff --name-status $MAIN_BRANCH)
+          NEW_FOLDERS=$(git diff --name-status $MAIN_BRANCH | grep -E '^[AM]' | awk '{print $2}' | grep 'Cargo.toml' | awk -F/ '{print $1}' | uniq)
 
           # Extract the names of new folders
-          if [[ -z "$(echo \"$DIFF\" | grep \"^A\" | awk '{print $2}' | grep 'Cargo.toml' | awk -F/ '{print $1}' | uniq)" ]]; then
+          if [[ -z "$NEW_FOLDERS" ]]; then
             echo "No new project found - skipping the build"
             gh run cancel ${{ github.run_id }}
             gh run watch ${{ github.run_id }}
           fi
 
-          NEW_FOLDERS=$(echo "$DIFF" | grep "^A" | awk '{print $2}' | grep 'Cargo.toml' | awk -F/ '{print $1}' | uniq)
-
           # Set the output variable
-          echo "::set-output name=project::$NEW_FOLDERS"
+          echo "{project}={$NEW_FOLDERS}" >> $GITHUB_OUTPUT
         env:
           GH_TOKEN: ${{ github.token }}
       - name: setup | rust
