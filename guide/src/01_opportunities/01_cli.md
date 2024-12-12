@@ -24,3 +24,4 @@ Here are some optional ideas for CLI options you could implement:
 - support different output destinations, e.g. file (e.g. `--output-file output.csv`)
 - support different output verbosity levels (e.g. `--verbose`, `--debug`, etc.)
 - support different error handling strategies (e.g. `--ignore-errors`, `--fail-fast`, etc.)
+- show a nice progress bar while processing the input files
