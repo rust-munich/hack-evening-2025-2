@@ -102,12 +102,12 @@ jobs:
 
           GITSHA=$(git rev-parse HEAD)
 
-          echo "### Benchmark for 1B at $GITSHA" > comment.md
-          echo "" >> comment.md
-          echo "$RESULTS" >> comment.md
-          echo "" >> comment.md
+          echo "### Benchmark for 1B at $GITSHA" > comment-2.md
+          echo "" >> comment-2.md
+          echo "$RESULTS" >> comment-2.md
+          echo "" >> comment-2.md
 
           # Post the comment to the PR
-          gh pr comment ${{ github.event.pull_request.number }} -F comment.md
+          gh pr comment ${{ github.event.pull_request.number }} -F comment-2.md
         env:
           GH_TOKEN: ${{ github.token }}
