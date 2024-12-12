@@ -1,0 +1,113 @@
+name: Benchmark PR
+on:
+  pull_request:
+  workflow_dispatch:
+
+defaults:
+  run:
+    shell: bash --noprofile --norc -CeEuxo pipefail {0}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  benchmark:
+    name: test
+    runs-on:
+      group: Benchmark
+    timeout-minutes: 8
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: determine the new added project
+        id: determine_project
+        run: |
+          # Get the name of the main branch (assuming it's 'main')
+          MAIN_BRANCH="main"
+
+          # Fetch the main branch
+          git fetch origin $MAIN_BRANCH:$MAIN_BRANCH
+
+          NEW_FOLDER=$(git diff --name-status $MAIN_BRANCH | grep -E '^[AM]' | awk '{print $2}' | grep 'Cargo.toml' | awk -F/ '{printf("%s/%s\n", $1, $2)}' | uniq)
+
+          # Extract the names of new folders
+          if [[ -z "$NEW_FOLDER" ]]; then
+            echo "No new project found - skipping the build"
+            gh run cancel ${{ github.run_id }}
+            gh run watch ${{ github.run_id }}
+          fi
+
+          # Set the output variable
+          echo "PROJECT_FOLDER=$NEW_FOLDER" >> "$GITHUB_OUTPUT"
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: build
+        run: cargo build --release
+        working-directory: ${{ steps.determine_project.outputs.PROJECT_FOLDER }}
+
+      - name: test
+        run: cargo run --release -- ../../samples/weather_100.csv > X
+        working-directory: ${{ steps.determine_project.outputs.PROJECT_FOLDER }}
+
+      - name: diff results
+        run: |
+          # Check if the results are correct
+          diff -w X ../../samples/expected/weather_100.txt
+
+        working-directory: ${{ steps.determine_project.outputs.PROJECT_FOLDER }}
+
+      - name: benchmark
+        run: |
+          hyperfine --warmup 0 --runs 5 --export-markdown benchmark.md \
+            'cargo run --release -- ../../samples/weather_100.csv' \
+            'cargo run --release -- ../../samples/weather_1K.csv' \
+            'cargo run --release -- ../../samples/weather_100K.csv'
+        working-directory: ${{ steps.determine_project.outputs.PROJECT_FOLDER }}
+
+      - name: post comment
+        run: |
+          # Read the test results
+          RESULTS=$(cat ${{ steps.determine_project.outputs.PROJECT_FOLDER }}/benchmark.md)
+
+          # Print the results
+          echo "Results: $RESULTS"
+
+          GITSHA=$(git rev-parse HEAD)
+
+          echo "### Benchmark Preview at $GITSHA" > comment.md
+          echo "" >> comment.md
+          echo "$RESULTS" >> comment.md
+          echo "" >> comment.md
+
+          # Post the comment to the PR
+          gh pr comment ${{ github.event.pull_request.number }} -F comment.md
+        env:
+          GH_TOKEN: ${{ github.token }}
+
+      - name: benchmark-large
+        run: |
+          hyperfine --warmup 0 --runs 1 --export-markdown benchmark-large.md \
+            "cargo run --release -- $HOME/samples/weather_1B.csv"
+        working-directory: ${{ steps.determine_project.outputs.PROJECT_FOLDER }}
+
+      - name: post comment large
+        run: |
+          # Read the test results
+          RESULTS=$(cat ${{ steps.determine_project.outputs.PROJECT_FOLDER }}/benchmark-large.md)
+
+          # Print the results
+          echo "Results: $RESULTS"
+
+          GITSHA=$(git rev-parse HEAD)
+
+          echo "### Benchmark for 1B at $GITSHA" > comment.md
+          echo "" >> comment.md
+          echo "$RESULTS" >> comment.md
+          echo "" >> comment.md
+
+          # Post the comment to the PR
+          gh pr comment ${{ github.event.pull_request.number }} -F comment.md
+        env:
+          GH_TOKEN: ${{ github.token }}
