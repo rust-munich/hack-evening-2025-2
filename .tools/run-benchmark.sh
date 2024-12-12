@@ -38,9 +38,11 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo "Running the solution $NAME on the benchmark dataset"
+$BIN_NAME=$(cargo metadata --format-version 1 | jq -r '.packages[].targets[] | select(.kind[] == "bin") | .name')
+
+echo "Running the solution $BIN_NAME on the benchmark dataset"
 
 hyperfine --warmup 0 --runs 5 \
     --export-json $RESULTS_FOLDER/$NAME.json \
     --show-output \
-    "cargo run --release -- $BENCHMARK_DATASET"
+    "target/release/$BIN_NAME -- $BENCHMARK_DATASET"
