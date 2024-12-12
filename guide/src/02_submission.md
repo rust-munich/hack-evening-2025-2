@@ -21,3 +21,9 @@ Please note that CI will run on your pull request to ensure that your solution c
 :NOTE: If you have any questions, feel free to ask in the [`#hack-evening-2024-4` channel on the Rust Munich Discord server](https://discord.com/channels/704612189532586014/1315802468868817007).
 
 Good luck! 🦀
+
+## CI is your friend
+
+- Your PR is automatically checked by GitHub Actions
+- Benchmarks are exectued and results are provided as Comment on the PR, you can use this as a tool
+- Flamegraphs are also produced during the build, they should appear on the PR as comment as well

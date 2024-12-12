@@ -114,17 +114,17 @@ solutions/your-handle/
 
 ### How To Submit
 
-TODO(@sassman)
+-> Check out the [submission guide](https://rust-meetup-munich.github.io/hack-evening-2024-4/guide/src/02_submission.html) for more details.
 
 ### Helpful Commands
 
 | Task                     | Folder                    | Command                                          |
 | ------------------------ | ------------------------- | ------------------------------------------------ |
 | generate 1B rows of data | data-generator            | `cargo run --release -- --rows 1000000000`       |
-| run a debug build        | solution-${GITHUB_HANDLE} | `cargo run           -- weather_1M.csv`          |
-| run a release build      | solution-${GITHUB_HANDLE} | `cargo run --release -- weather_1B.csv`          |
-| run tests                | solution-${GITHUB_HANDLE} | `cargo test`                                     |
-| run flamegraph           | solution-${GITHUB_HANDLE} | `sudo cargo flamegraph --root -- weather_1B.csv` |
+| run a debug build        | solutions/${GITHUB_HANDLE} | `cargo run           -- weather_1M.csv`          |
+| run a release build      | solutions/${GITHUB_HANDLE} | `cargo run --release -- weather_1B.csv`          |
+| run tests                | solutions/${GITHUB_HANDLE} | `cargo test`                                     |
+| run flamegraph           | solutions/${GITHUB_HANDLE} | `sudo cargo flamegraph --root -- weather_1B.csv` |
 
 ### Tips & Tricks
 
@@ -159,6 +159,8 @@ to give you a chance to still develop an algorithmic idea and dip your toe into 
 large input data and extensive benchmarking are not possible, so a proper submission will be tricky.
 
 [Rust playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=d039ad90338c5d71533c7e19e7c1012e)
+
+Please check out our [Discord channel #hack-evening-2024-4](https://discord.com/channels/704612189532586014/1315802468868817007) for further help and assistance.
 
 ## Additional Resources
 
