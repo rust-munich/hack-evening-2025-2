@@ -45,4 +45,4 @@ echo "Running the solution $BIN_NAME on the benchmark dataset"
 hyperfine --warmup 0 --runs 5 \
     --export-json $RESULTS_FOLDER/$NAME.json \
     --show-output \
-    "target/release/$BIN_NAME -- $BENCHMARK_DATASET"
+    "target/release/$BIN_NAME $BENCHMARK_DATASET"
