@@ -27,7 +27,7 @@ jobs:
           # Fetch the main branch
           git fetch origin $MAIN_BRANCH:$MAIN_BRANCH
 
-          NEW_FOLDER=$(git diff --name-status $MAIN_BRANCH | grep -E '^[AM]' | awk '{print $2}' | grep 'Cargo.toml' | awk -F/ '{print $1}' | uniq)
+          NEW_FOLDER=$(git diff --name-status $MAIN_BRANCH | grep -E '^[AM]' | awk '{print $2}' | grep 'Cargo.toml' | awk -F/ '{printf("%s/%s\n", $1, $2)}' | uniq)
 
           # Extract the names of new folders
           if [[ -z "$NEW_FOLDER" ]]; then
