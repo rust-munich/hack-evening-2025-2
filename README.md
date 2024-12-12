@@ -114,7 +114,7 @@ solutions/your-handle/
 
 ### How To Submit
 
--> Check out the [submission guide](https://rust-meetup-munich.github.io/hack-evening-2024-4/guide/src/02_submission.html) for more details.
+-> Check out the [submission guide](https://rust-meetup-munich.github.io/hack-evening-2024-4/02_submission.html) for more details.
 
 ### Helpful Commands
 
