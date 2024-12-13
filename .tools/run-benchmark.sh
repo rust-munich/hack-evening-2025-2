@@ -38,7 +38,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-BIN_NAME=$(cargo metadata --format-version 1 | jq -r '.packages[].targets[] | select(.kind[] == "bin") | .name')
+BIN_NAME=$(cargo metadata --format-version 1 | jq -r '.packages[].targets[] | select(.kind[] == "bin") | .name' | head -n 1)
 
 echo "Running the solution $BIN_NAME on the benchmark dataset"
 
