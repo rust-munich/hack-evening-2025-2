@@ -38,7 +38,11 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-BIN_NAME=$(cargo metadata --format-version 1 | jq -r '.packages[].targets[] | select(.kind[] == "bin") | .name' | head -n 1)
+# get the package name from Cargo.toml
+PACKAGE_NAME=$(grep '^name =' Cargo.toml | sed -E 's/name = "(.*)"/\1/')
+
+# get the list of binaries for the current package
+BIN_NAME=$(cargo metadata --format-version 1 | jq -r --arg PACKAGE_NAME "$PACKAGE_NAME" '.packages[] | select(.name == $PACKAGE_NAME) | .targets[] | select(.kind[] == "bin") | .name')
 
 echo "Running the solution $BIN_NAME on the benchmark dataset"
 
