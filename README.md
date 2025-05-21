@@ -1,4 +1,7 @@
-# Billion Row Challenge <!-- omit in toc -->
+# Billion Row Challenge (Part 2) <!-- omit in toc -->
+
+> Here is Part 1: https://github.com/rust-munich/hack-evening-2024-4
+
 
 > This challenge is inspired by the original [Java version](https://1brc.dev/), including the rules,
 > dataset and task. Thank you Gunnar Morling for coming up with the
