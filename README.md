@@ -1,5 +1,29 @@
 # Billion Row Challenge (Part 2) <!-- omit in toc -->
 
+ ## Agenda
+
+18:30 Begin
+
+- Recap of tbe Challenge
+- Recap of the Solutions
+- Deep Dive Jonas
+- Deep Dive Bradford
+  
+20:00 Pizza
+  
+- Hacking Session
+
+21:00 Wrap Up
+
+## Feedback
+
+[Feedback Form](https://docs.google.com/forms/d/e/1FAIpQLScbJvr0A7CoXhoWtppAh1ITJBQeLdQBVDUQ9l3ZGlsp3tbpyA/viewform)
+
+Filling in the feedback form helps us a lot to improve future events!
+
+----
+
+
 > Here is Part 1: https://github.com/rust-munich/hack-evening-2024-4
 >
 > This challenge is inspired by the original [Java version](https://1brc.dev/), including the rules,
