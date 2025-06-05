@@ -2,17 +2,24 @@
 
 ## CLI
 
-There are a few rust libraries available to create a CLI for your solution. This is a great opportunity to learn how to use them. Here we want to suggest two libraries, `clap` and `argh`.
+There are a few rust libraries available to create a CLI for your solution. This is a great
+opportunity to learn how to use them. Here we want to suggest two libraries, `clap` and `argh`.
 
 ### Clap
 
-You could use [clap](https://docs.rs/clap/latest/clap/) - A full-featured, fast Command Line Argument Parser for Rust, to create a CLI for your solution.
+You could use [clap](https://docs.rs/clap/latest/clap/) - A full-featured, fast Command Line
+Argument Parser for Rust, to create a CLI for your solution.
 
-:Note: clap has a sort of a declarative syntax, which works with rust proc macros. It's very well documented in form of examples, and reduces the boilerplate code you have to write for parsing command line arguments. This is very useful to explore if you are new to clap. Besides you can still use the procedural API if you prefer.
+:Note: clap has a sort of a declarative syntax, which works with rust proc macros. It's very well
+documented in form of examples, and reduces the boilerplate code you have to write for parsing
+command line arguments. This is very useful to explore if you are new to clap. Besides you can still
+use the procedural API if you prefer.
 
 ### Alternative Argh
 
-There is different library called [Argh](https://crates.io/crates/argh) that comes with a declarative syntax for defining command line arguments. It's a bit less feature-rich than clap, yet it's powerful and easy to use.
+There is different library called [Argh](https://crates.io/crates/argh) that comes with a
+declarative syntax for defining command line arguments. It's a bit less feature-rich than clap, yet
+it's powerful and easy to use.
 
 ## Ideas for your CLI
 
