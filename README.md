@@ -1,16 +1,15 @@
 # Billion Row Challenge (Part 2) <!-- omit in toc -->
 
 > Here is Part 1: https://github.com/rust-munich/hack-evening-2024-4
-
-
+>
 > This challenge is inspired by the original [Java version](https://1brc.dev/), including the rules,
 > dataset and task. Thank you Gunnar Morling for coming up with the
 > [original idea](https://www.morling.dev/blog/one-billion-row-challenge/)!
 
-This repository contains a template and different solutions for the Billion Row Challenge we ran for
-the Rust Munich meetup in December 2024. We tried to keep deviations from the original challenge to
-a minimum for the sake of comparability, but since the event takes place in a single evening there
-are slight adaptations.
+This repository contains a template and basic solution for the Billion Row Challenge we ran for the
+Rust Munich meetup in June 2025. We tried to keep deviations from the original challenge to a
+minimum for the sake of comparability, but since the event takes place in a single evening there are
+slight adaptations.
 
 ## Table of Contents <!-- omit in toc -->
 
@@ -19,7 +18,6 @@ are slight adaptations.
   - [Rules and Limitations](#rules-and-limitations)
 - [Project Particularities](#project-particularities)
   - [Getting Started](#getting-started)
-  - [How To Submit](#how-to-submit)
   - [Helpful Commands](#helpful-commands)
   - [Tips \& Tricks](#tips--tricks)
 - [Advanced Techniques](#advanced-techniques)
@@ -97,10 +95,10 @@ hard-coding the results! 😉
 Please run the following commands:
 
 ```sh
-git clone git@github.com:rust-meetup-munich/hack-evening-2024-4.git
-cd hack-evening-2024-4
+git clone git@github.com:rust-meetup-munich/hack-evening-2025-2.git
+cd hack-evening-2025
 git checkout -b solutions/${GITHUB_HANDLE}
-cargo new solutions/${GITHUB_HANDLE}
+cargo new solution-${GITHUB_HANDLE}
 ```
 
 The commands above will create a new git branch and initialize a new binary Rust project for your
@@ -108,31 +106,27 @@ solution. It will have the following simple structure; we expect your solution t
 the `main.rs` file.
 
 ```text
-solutions/your-handle/
+solution/
 ├── Cargo.lock
 ├── Cargo.toml
 ├── src
 │   └── main.rs
 ```
 
-### How To Submit
-
--> Check out the [submission guide](https://rust-meetup-munich.github.io/hack-evening-2024-4/02_submission.html) for more details.
-
 ### Helpful Commands
 
-| Task                     | Folder                     | Command                                          |
-| ------------------------ | -------------------------- | ------------------------------------------------ |
-| generate 1B rows of data | data-generator             | `cargo run --release -- --rows 1000000000`       |
-| run a debug build        | solutions/${GITHUB_HANDLE} | `cargo run           -- weather_1M.csv`          |
-| run a release build      | solutions/${GITHUB_HANDLE} | `cargo run --release -- weather_1B.csv`          |
-| run tests                | solutions/${GITHUB_HANDLE} | `cargo test`                                     |
-| run flamegraph           | solutions/${GITHUB_HANDLE} | `sudo cargo flamegraph --root -- weather_1B.csv` |
+| Task                     | Folder         | Command                                          |
+| ------------------------ | -------------- | ------------------------------------------------ |
+| generate 1B rows of data | data-generator | `cargo run --release -- --rows 1000000000`       |
+| run a debug build        | solution       | `cargo run           -- weather_1M.csv`          |
+| run a release build      | solution       | `cargo run --release -- weather_1B.csv`          |
+| run tests                | solution       | `cargo test`                                     |
+| run flamegraph           | solution       | `sudo cargo flamegraph --root -- weather_1B.csv` |
 
 ### Tips & Tricks
 
-- This event is rather short, so we recommend going for a functionally correct, simple solution
-  first and then iteratively improve parts.
+- This event is rather short, so if you are building a solution from scratch we recommend going for
+  simple solution first and then iteratively improving parts.
 - When developing, use debug builds and smaller datasets (e.g. 10M rows) to avoid long computation
   times.
 - Keep your intermediate solutions by committing them, both for discussions and comparisons.
@@ -157,13 +151,15 @@ This section lists a few advanced techniques you may want to consider:
 
 ## Setup Issues?
 
-In case you have setup issues and cannot program locally, we prepared a Rust playground template
-to give you a chance to still develop an algorithmic idea and dip your toe into Rust 🦀. Proper I/O,
+In case you have setup issues and cannot program locally, we prepared a Rust playground template to
+give you a chance to still develop an algorithmic idea and dip your toe into Rust 🦀. Proper I/O,
 large input data and extensive benchmarking are not possible, so a proper submission will be tricky.
 
 [Rust playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=d039ad90338c5d71533c7e19e7c1012e)
 
-Please check out our [Discord channel #hack-evening-2024-4](https://discord.com/channels/704612189532586014/1315802468868817007) for further help and assistance.
+Please check out our
+[Discord channel #hack-evening-2024-4](https://discord.com/channels/704612189532586014/1315802468868817007)
+for further help and assistance.
 
 ## Additional Resources
 
